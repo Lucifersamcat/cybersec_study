@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ciberseguridad — Guía de Estudio</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #222636;
+      --border: #2e3347;
+      --accent: #4f8ef7;
+      --accent2: #7c5cfc;
+      --green: #3ecf8e;
+      --red: #f25f5c;
+      --yellow: #f9c74f;
+      --orange: #f4845f;
+      --text: #e2e8f0;
+      --muted: #8892a4;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #0d1020ee;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      height: 54px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 4px 0;
+      border-bottom: 2px solid transparent;
+      transition: color .2s, border-color .2s;
+    }
+    nav a:hover { color: var(--accent); border-color: var(--accent); }
+    nav .logo { color: var(--accent); font-weight: 700; font-size: 15px; margin-right: 1rem; flex-shrink: 0; }
+
+    /* LAYOUT */
+    .page { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .hero h1 { font-size: 2rem; font-weight: 800; color: #fff; line-height: 1.2; }
+    .hero h1 span { color: var(--accent); }
+    .hero p { margin-top: .75rem; color: var(--muted); max-width: 560px; margin-inline: auto; }
+    .badge {
+      display: inline-block;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px 14px;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    /* SECTIONS */
+    section { margin-bottom: 3.5rem; }
+
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #fff;
+      border-left: 4px solid var(--accent);
+      padding-left: .75rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-title.green  { border-color: var(--green); }
+    .section-title.purple { border-color: var(--accent2); }
+    .section-title.yellow { border-color: var(--yellow); }
+    .section-title.red    { border-color: var(--red); }
+    .section-title.orange { border-color: var(--orange); }
+
+    .subsection-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 1.5rem 0 .75rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      font-size: 12px;
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 1rem;
+    }
+    .card h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: .6rem; }
+    .card h4 { font-size: .9rem; font-weight: 700; color: var(--accent); margin: .8rem 0 .4rem; }
+    .card p, .card li { color: var(--muted); font-size: 14px; }
+    .card ul { padding-left: 1.2rem; }
+    .card ul li { margin-bottom: .3rem; }
+    .card strong { color: var(--text); }
+    .card ol { padding-left: 1.2rem; }
+    .card ol li { color: var(--muted); font-size: 14px; margin-bottom: .3rem; }
+
+    /* ANSWER BOX */
+    .answer-box {
+      background: #111825;
+      border: 1px solid #1e3a5f;
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      margin-top: .5rem;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .answer-box strong { color: var(--text); }
+    .answer-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      margin-bottom: .4rem;
+      display: block;
+    }
+    .answer-box ul { padding-left: 1.1rem; margin-top: .4rem; }
+    .answer-box li { margin-bottom: .3rem; }
+
+    /* VIDEO CARDS */
+    .video-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .video-num {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .video-body h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: .4rem; }
+    .video-body a { color: var(--accent); font-size: 12px; text-decoration: none; }
+    .video-body a:hover { text-decoration: underline; }
+    .video-body ul { padding-left: 1.2rem; margin-top: .6rem; }
+    .video-body li { color: var(--muted); font-size: 14px; margin-bottom: .3rem; }
+    .video-body strong { color: var(--text); }
+
+    /* PILLAR GRID */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .pillar {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .pillar-icon { font-size: 1.8rem; margin-bottom: .5rem; }
+    .pillar h4 { font-size: .9rem; font-weight: 700; color: #fff; }
+    .pillar p { font-size: 13px; color: var(--muted); margin-top: .3rem; }
+
+    /* TABLE */
+    .table-wrap { overflow-x: auto; margin: 1rem 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th {
+      background: var(--surface2);
+      color: var(--accent);
+      font-weight: 600;
+      text-align: left;
+      padding: .7rem 1rem;
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: .65rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface2); }
+    td strong { color: var(--text); }
+
+    /* DELITOS */
+    .delito-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .delito-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem;
+    }
+    .delito-card .tag {
+      display: inline-block;
+      background: var(--surface2);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: .6rem;
+    }
+    .delito-card h4 { font-size: .95rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
+    .delito-card ul { padding-left: 1.1rem; }
+    .delito-card li { font-size: 13px; color: var(--muted); margin-bottom: .3rem; }
+    .delito-card li strong { color: var(--text); }
+
+    /* GLOSARIO */
+    .glosario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: .75rem;
+      margin-top: 1rem;
+    }
+    .glosario-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .9rem 1.1rem;
+    }
+    .glosario-item dt { font-size: .9rem; font-weight: 700; color: var(--green); margin-bottom: .2rem; }
+    .glosario-item dd { font-size: 13px; color: var(--muted); }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 2rem; margin-top: 1rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 4px; bottom: 4px;
+      width: 2px;
+      background: var(--border);
+    }
+    .timeline-item { position: relative; margin-bottom: 1.2rem; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -1.65rem; top: 6px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+    }
+    .timeline-year { font-size: 12px; font-weight: 700; color: var(--accent); }
+    .timeline-text { font-size: 14px; color: var(--muted); }
+    .timeline-text strong { color: var(--text); }
+
+    /* CASOS EXPANDIBLES */
+    .caso-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+    .caso-header {
+      background: var(--surface2);
+      padding: .9rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .caso-num {
+      background: var(--accent2);
+      color: #fff;
+      font-weight: 800;
+      font-size: 12px;
+      border-radius: 6px;
+      padding: 3px 9px;
+      flex-shrink: 0;
+    }
+    .caso-header h3 { font-size: .95rem; font-weight: 700; color: #fff; flex: 1; }
+    .caso-toggle { color: var(--muted); font-size: 18px; transition: transform .3s; }
+    .caso-card.open .caso-toggle { transform: rotate(180deg); }
+    .caso-body {
+      display: none;
+      padding: 1.2rem 1.4rem;
+      border-top: 1px solid var(--border);
+    }
+    .caso-card.open .caso-body { display: block; }
+    .caso-body p { font-size: 14px; color: var(--muted); margin-bottom: .5rem; }
+    .caso-body strong { color: var(--text); }
+    .caso-body ul { padding-left: 1.2rem; margin: .4rem 0; }
+    .caso-body li { font-size: 14px; color: var(--muted); margin-bottom: .25rem; }
+
+    .delitos-tag { margin-top: .8rem; }
+    .delitos-tag span {
+      display: inline-block;
+      background: #1e1535;
+      border: 1px solid var(--accent2);
+      color: var(--accent2);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 12px;
+      margin: 2px;
+    }
+
+    /* PRACTICA EXPANDIBLE */
+    .practica-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+    .practica-header {
+      background: var(--surface2);
+      padding: .9rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .practica-num {
+      background: var(--yellow);
+      color: #111;
+      font-weight: 800;
+      font-size: 12px;
+      border-radius: 6px;
+      padding: 3px 9px;
+      flex-shrink: 0;
+    }
+    .practica-header h3 { font-size: .95rem; font-weight: 700; color: #fff; flex: 1; }
+    .practica-toggle { color: var(--muted); font-size: 18px; transition: transform .3s; }
+    .practica-card.open .practica-toggle { transform: rotate(180deg); }
+    .practica-body {
+      display: none;
+      padding: 1.4rem 1.6rem;
+      border-top: 1px solid var(--border);
+    }
+    .practica-card.open .practica-body { display: block; }
+    .practica-body p { font-size: 14px; color: var(--muted); margin-bottom: .6rem; }
+    .practica-body strong { color: var(--text); }
+    .practica-body ul, .practica-body ol { padding-left: 1.2rem; margin: .4rem 0 .8rem; }
+    .practica-body li { font-size: 14px; color: var(--muted); margin-bottom: .3rem; }
+    .practica-body h4 { font-size: .85rem; font-weight: 700; color: var(--yellow); margin: 1rem 0 .4rem; text-transform: uppercase; letter-spacing: .05em; }
+
+    /* DENUNCIA STEPS */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.1rem;
+      display: flex;
+      gap: .8rem;
+      align-items: flex-start;
+    }
+    .step-num {
+      background: var(--green);
+      color: #0f1117;
+      font-weight: 800;
+      font-size: 13px;
+      border-radius: 6px;
+      width: 28px; height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step p { font-size: 13px; color: var(--muted); }
+    .step strong { color: var(--text); display: block; font-size: 14px; margin-bottom: .2rem; }
+
+    /* ALERT */
+    .alert {
+      background: #1a1300;
+      border: 1px solid #5a4500;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-top: 1rem;
+      font-size: 14px;
+      color: var(--yellow);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">&#128274; CiberEstudio RD</span>
+  <a href="#modulo1">Módulo 1</a>
+  <a href="#taller">Taller</a>
+  <a href="#glosario">Glosario</a>
+  <a href="#videos">Videos</a>
+  <a href="#ley">Ley 53-07</a>
+  <a href="#instituciones">Instituciones</a>
+  <a href="#historia">Historial</a>
+  <a href="#modulo2">Módulo 2</a>
+  <a href="#casos">Casos</a>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="badge">Material de Estudio · República Dominicana</div>
+    <h1>Ciberseguridad y <span>Marco Legal</span><br>en la República Dominicana</h1>
+    <p>Guía completa con tareas resueltas, casos analizados, glosario y marco legal de la Ley No. 53-07.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- MÓDULO 1                                   -->
+  <!-- ══════════════════════════════════════════ -->
+  <section id="modulo1">
+    <div class="section-title">Módulo 1 — Introducción a la Ciberseguridad</div>
+
+    <div class="card">
+      <h3>¿Qué es la Ciberseguridad?</h3>
+      <p>El <strong>cuidado y protección de la información</strong>, propia y de terceros, gestionada en dispositivos electrónicos como computadoras, redes y teléfonos. Es un trabajo preventivo y constante que busca anticiparse a las amenazas.</p>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-icon">🔒</div>
+        <h4>Confidencialidad</h4>
+        <p>Mantener la privacidad de la información. Solo acceden quienes están autorizados.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">⚡</div>
+        <h4>Disponibilidad</h4>
+        <p>Garantizar el acceso a la información cuando se necesite, sin interrupciones.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">✅</div>
+        <h4>Integridad</h4>
+        <p>Asegurar que la información sea exacta, completa y no haya sido alterada.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1rem;">
+      <h3>Amenazas vs. Vulnerabilidades</h3>
+      <p style="margin-bottom:.6rem;">Una vulnerabilidad por sí sola no causa daño; necesita una <strong>amenaza que la explote</strong>. El riesgo surge cuando ambos coinciden.</p>
+      <ul>
+        <li><strong>Vulnerabilidad:</strong> Debilidad en un sistema (contraseña débil, software desactualizado, mala configuración).</li>
+        <li><strong>Amenaza:</strong> Agente capaz de explotar esa debilidad (hacker, malware, error humano).</li>
+        <li><strong>Riesgo:</strong> Amenaza + Vulnerabilidad + Impacto potencial.</li>
+        <li><strong>Ejemplo:</strong> Servidor sin actualizar (vulnerabilidad) + hacker (amenaza) = robo de datos (impacto).</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- TALLER — ESCENARIOS RESUELTOS              -->
+  <!-- ══════════════════════════════════════════ -->
+  <section id="taller">
+    <div class="section-title orange">Taller — Escenarios Resueltos</div>
+
+    <!-- ESCENARIO 1 -->
+    <div class="card">
+      <h3>Escenario 1: Wi-Fi pública sin contraseña</h3>
+      <p>Juan se conecta a una red Wi-Fi gratuita en su cafetería favorita para revisar su correo. Un atacante en la misma red puede interceptar su tráfico.</p>
+      <div class="answer-box" style="margin-top:.8rem;">
+        <span class="answer-label">✔ Respuesta</span>
+        <p><strong>Vulnerabilidad:</strong> La red Wi-Fi no tiene cifrado ni autenticación, permitiendo que cualquier persona observe el tráfico de datos que circula por ella.</p>
+        <p style="margin-top:.5rem;"><strong>Amenaza:</strong> Ataque <strong>Man-in-the-Middle (MitM)</strong> — el atacante se posiciona entre Juan y el punto de acceso, interceptando correos, contraseñas y cualquier información transmitida sin cifrar.</p>
+      </div>
+    </div>
+
+    <!-- ESCENARIO 2 -->
+    <div class="card">
+      <h3>Escenario 2: Contraseña débil en redes sociales</h3>
+      <p>Laura usa la misma contraseña "12345" para todas sus cuentas. Un atacante la adivina y accede a sus perfiles.</p>
+      <div class="answer-box" style="margin-top:.8rem;">
+        <span class="answer-label">✔ Respuesta</span>
+        <p><strong>Vulnerabilidades:</strong></p>
+        <ul>
+          <li>Contraseña extremadamente débil — fácilmente adivinable por fuerza bruta.</li>
+          <li>Reutilización en múltiples cuentas — si una cae, todas caen.</li>
+        </ul>
+        <p style="margin-top:.5rem;"><strong>Amenaza:</strong> Fuerza bruta o <em>credential stuffing</em> (uso de contraseñas filtradas en otras plataformas).</p>
+        <p style="margin-top:.5rem;"><strong>Medidas de protección:</strong></p>
+        <ul>
+          <li>Usar contraseñas largas y únicas (+12 caracteres con letras, números y símbolos).</li>
+          <li>Activar <strong>autenticación de dos factores (2FA)</strong> en todas las cuentas.</li>
+          <li>Usar un gestor de contraseñas.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ESCENARIO 3 -->
+    <div class="card">
+      <h3>Escenario 3: Phishing por correo electrónico</h3>
+      <p>Roberto recibe un correo de su "banco" pidiendo actualizar su información. El enlace lleva a una página falsa.</p>
+      <div class="answer-box" style="margin-top:.8rem;">
+        <span class="answer-label">✔ Respuesta</span>
+        <p><strong>Vulnerabilidad:</strong> Roberto no verifica la autenticidad del correo antes de actuar. Falta de conocimiento sobre señales de phishing.</p>
+        <p style="margin-top:.5rem;"><strong>Amenaza:</strong> <strong>Phishing</strong> — suplantación de identidad del banco para robar credenciales e información financiera.</p>
+        <p style="margin-top:.5rem;"><strong>¿Cómo identificar si el correo es legítimo?</strong></p>
+        <ul>
+          <li>Revisar el dominio del remitente (los bancos no usan Gmail u otros dominios genéricos).</li>
+          <li>No hacer clic en enlaces — ingresar directamente la URL del banco en el navegador.</li>
+          <li>Los bancos legítimos <strong>nunca</strong> piden credenciales por correo.</li>
+          <li>Buscar errores ortográficos, urgencia exagerada o diseño genérico en el mensaje.</li>
+          <li>Llamar directamente al banco para confirmar.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- GLOSARIO                                   -->
+  <!-- ══════════════════════════════════════════ -->
+  <section id="glosario">
+    <div class="section-title green">Glosario de Ciberseguridad</div>
+    <div class="glosario-grid">
+      <dl class="glosario-item"><dt>Malware</dt><dd>Software malicioso diseñado para dañar, infiltrarse o robar información de un sistema sin autorización.</dd></dl>
+      <dl class="glosario-item"><dt>Ransomware</dt><dd>Malware que cifra los archivos de la víctima y exige un pago para devolver el acceso.</dd></dl>
+      <dl class="glosario-item"><dt>Firewall</dt><dd>Sistema que monitorea y controla el tráfico de red según reglas predefinidas.</dd></dl>
+      <dl class="glosario-item"><dt>Autenticación de dos factores (2FA)</dt><dd>Método que requiere dos formas de verificación para acceder a una cuenta.</dd></dl>
+      <dl class="glosario-item"><dt>Ingeniería social</dt><dd>Técnicas de manipulación psicológica para obtener información confidencial engañando a personas.</dd></dl>
+      <dl class="glosario-item"><dt>Phishing</dt><dd>Intento de obtener información sensible haciéndose pasar por una entidad de confianza vía correo.</dd></dl>
+      <dl class="glosario-item"><dt>Vishing</dt><dd>Phishing realizado mediante llamadas telefónicas.</dd></dl>
+      <dl class="glosario-item"><dt>SMShing</dt><dd>Phishing realizado mediante mensajes de texto (SMS).</dd></dl>
+      <dl class="glosario-item"><dt>Hacking ético</dt><dd>Ataque a sistemas con permiso del propietario para detectar vulnerabilidades antes que actores maliciosos.</dd></dl>
+      <dl class="glosario-item"><dt>Pentesting</dt><dd>Prueba de penetración; simulación de ataque para evaluar la seguridad de un sistema.</dd></dl>
+      <dl class="glosario-item"><dt>VPN</dt><dd>Red privada virtual que cifra la conexión a internet y protege la privacidad del usuario.</dd></dl>
+      <dl class="glosario-item"><dt>Cifrado</dt><dd>Proceso de convertir información en un formato ilegible para protegerla de accesos no autorizados.</dd></dl>
+      <dl class="glosario-item"><dt>Backdoor</dt><dd>Acceso oculto a un sistema, instalado por un atacante para regresar sin ser detectado.</dd></dl>
+      <dl class="glosario-item"><dt>Zero-day</dt><dd>Vulnerabilidad desconocida para el fabricante, explotada antes de que exista un parche de seguridad.</dd></dl>
+      <dl class="glosario-item"><dt>Media dropping</dt><dd>Técnica que consiste en dejar dispositivos (USB, CD) en lugares públicos para que alguien los conecte.</dd></dl>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- VIDEOS                                     -->
+  <!-- ══════════════════════════════════════════ -->
+  <section id="videos">
+    <div class="section-title green">Videos Instructivos</div>
+
+    <div class="video-card">
+      <div class="video-num">1</div>
+      <div class="video-body">
+        <h3>¿Qué es la ciberseguridad?</h3>
+        <a href="https://www.youtube.com/watch?v=SZlnyFujkGE" target="_blank">▶ Ver en YouTube</a>
+        <ul>
+          <li>Protección de la información en dispositivos electrónicos.</li>
+          <li>Tres pilares: <strong>Confidencialidad, Disponibilidad e Integridad</strong>.</li>
+          <li>Trabajo preventivo y constante anticipándose a amenazas.</li>
+          <li>Roles: hacking ético, pentesting, perfiles defensivos y concienciación de usuarios.</li>
+          <li><strong>Conclusión:</strong> La ciberseguridad protege el activo más importante de cualquier organización.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <div class="video-num">2</div>
+      <div class="video-body">
+        <h3>Diferencias entre amenazas y vulnerabilidades</h3>
+        <a href="https://www.youtube.com/watch?v=ZsGPGmo0JDY" target="_blank">▶ Ver en YouTube</a>
+        <ul>
+          <li><strong>Vulnerabilidad:</strong> Debilidad o fallo en sistemas, redes o aplicaciones.</li>
+          <li><strong>Amenaza:</strong> Agente o evento que puede explotar una vulnerabilidad.</li>
+          <li>Sin vulnerabilidad la amenaza no tiene efecto; sin amenaza la vulnerabilidad no se explota.</li>
+          <li><strong>Riesgo</strong> = Amenaza + Vulnerabilidad + Impacto potencial.</li>
+          <li><strong>Conclusión:</strong> Reducir vulnerabilidades disminuye el riesgo total.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <div class="video-num">3</div>
+      <div class="video-body">
+        <h3>La ciberseguridad, tarea de todos</h3>
+        <a href="https://www.youtube.com/watch?v=c7wAz9w4urY" target="_blank">▶ Ver en YouTube</a>
+        <p style="font-size:13px;color:var(--muted);margin:.4rem 0 .6rem;">Luis, trabajador capacitado, identifica y reporta ataques en su día a día:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Tipo de Ataque</th><th>Qué hace Luis</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Phishing</strong> (correo)</td><td>Recibe correo falso de su empresa y lo reporta de inmediato.</td></tr>
+              <tr><td><strong>Vishing</strong> (llamada)</td><td>Identifica llamada de falsos técnicos de Microsoft y corta la comunicación.</td></tr>
+              <tr><td><strong>Seguridad física</strong></td><td>Detecta persona sospechosa cerca de equipos desbloqueados y avisa.</td></tr>
+              <tr><td><strong>Media dropping</strong> (USB)</td><td>Encuentra USB perdido y lo entrega a seguridad en vez de conectarlo.</td></tr>
+              <tr><td><strong>SMShing</strong> (SMS)</td><td>Recibe SMS falso de caducidad de contraseña y lo reporta.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:.6rem;font-size:13px;color:var(--muted);"><strong>Mensaje:</strong> La ciberseguridad es responsabilidad compartida. La formación es clave para prevenir ataques.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- LEY 53-07                                  -->
+  <!-- ══════════════════════════════════════════ -->
+  <section id="ley">
+    <div class="section-title yellow">Ley No. 53-07 — Crímenes y Delitos de Alta Tecnología</div>
+
+    <div class="card">
+      <h3>Contexto</h3>
+      <p>Promulgada el <strong>23 de abril de 2007</strong> por el presidente Leonel Fernández. Principal ley dominicana que tipifica delitos informáticos. Se basó en el <strong>Convenio de Budapest</strong> como ley modelo. Aplica a nacionales y extranjeros cuando el delito produzca efectos en RD.</p>
+    </div>
+
+    <div class="delito-grid">
+      <div class="delito-card">
+        <div class="tag">Arts. 5–11</div>
+        <h4>Contra la Confidencialidad e Integridad</h4>
+        <ul>
+          <li><strong>Acceso ilícito</strong> (Art. 6) — 3 meses a 1 año</li>
+          <li><strong>Interceptación de datos</strong> (Art. 9) — 1 a 3 años</li>
+          <li><strong>Daño o alteración de datos</strong> (Art. 10) — 3 meses a 1 año</li>
+          <li><strong>Sabotaje informático</strong> (Art. 11) — 3 meses a 2 años</li>
+          <li><strong>Clonación de dispositivos</strong> (Art. 5) — 1 a 10 años</li>
+        </ul>
+      </div>
+      <div class="delito-card">
+        <div class="tag">Arts. 12–24</div>
+        <h4>Delitos de Contenido</h4>
+        <ul>
+          <li><strong>Robo de identidad</strong> (Art. 17) — 3 meses a 7 años</li>
+          <li><strong>Estafa electrónica</strong> (Art. 15) — 3 meses a 7 años</li>
+          <li><strong>Chantaje digital</strong> (Art. 16) — 1 a 5 años</li>
+          <li><strong>Pornografía infantil</strong> (Art. 24) — 2 a 4 años</li>
+          <li><strong>Difamación / Injuria</strong> (Arts. 21–22) — 3 meses a 1 año</li>
+          <li><strong>Obtención ilícita de fondos</strong> (Art. 14) — hasta 10 años</li>
+        </ul>
+      </div>
+      <div class="delito-card">
+        <div class="tag">Art. 26</div>
+        <h4>Contra las Telecomunicaciones</h4>
+        <ul>
+          <li>Llamadas fraudulentas (fraude línea 1-976)</li>
+          <li>Redireccionamiento de tráfico</li>
+          <li>Robo de línea telefónica</li>
+          <li>Manipulación de equipos</li>
+          <li>Intervención de centrales privadas</li>
+          <li><strong>Penas:</strong> 3 meses a 10 años</li>
+        </ul>
+      </div>
+      <div class="delito-card" style="border-color:#5a1010;">
+        <div class="tag" style="color:var(--red);">Arts. 27–28</div>
+        <h4>Contra la Nación y Terrorismo</h4>
+        <ul>
+          <li><strong>Sabotaje / espionaje nacional</strong> — 15 a 30 años</li>
+          <li><strong>Actos de terrorismo digital</strong> — 20 a 30 años</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- INSTITUCIONES                              -->
+  <!-- ══════════════════════════════════════════ -->
+  <section id="instituciones">
+    <div class="section-title purple">Instituciones Creadas por la Ley</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Sigla</th><th>Nombre completo</th><th>Dependencia</th><th>Función</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>DICAT</strong></td><td>Depto. de Investigación de Crímenes y Delitos de Alta Tecnología</td><td>Policía Nacional</td><td>Investigar y perseguir delitos tecnológicos</td></tr>
+          <tr><td><strong>DIDI</strong></td><td>División de Investigación de Delitos Informáticos</td><td>DNI</td><td>Casos contra la nación y la seguridad nacional</td></tr>
+          <tr><td><strong>CICDAT</strong></td><td>Comisión Interinstitucional contra Crímenes y Delitos de Alta Tecnología</td><td>Procurador General</td><td>Coordinación interinstitucional y política nacional</td></tr>
+          <tr><td><strong>PEDATEC</strong></td><td>Procuraduría Especializada contra Crímenes y Delitos de Alta Tecnología</td><td>Ministerio Público</td><td>Judicialización de los casos investigados</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card" style="margin-top:1rem;">
+      <h3>Estructura del DICAT</h3>
+      <ul>
+        <li><strong>Investigaciones</strong> — Recepción de denuncias y apoyo a procesos judiciales.</li>
+        <li><strong>Inteligencia</strong> — Análisis de amenazas cibernéticas emergentes.</li>
+        <li><strong>Evidencia Digital</strong> — Análisis forense y preservación de datos.</li>
+        <li><strong>Enlace y Cooperación</strong> — Coordinación con agencias nacionales e internacionales.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- HISTORIA                                   -->
+  <!-- ══════════════════════════════════════════ -->
+  <section id="historia">
+    <div class="section-title green">Hitos Históricos de RD en Ciberseguridad</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">2003</div>
+        <div class="timeline-text">Primera <strong>investigación oficial por delito informático</strong> en la República Dominicana.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2007</div>
+        <div class="timeline-text">Promulgación de la <strong>Ley 53-07</strong> y creación formal del DICAT y la CICDAT.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2008</div>
+        <div class="timeline-text">Primera cooperación internacional con la <strong>Guardia Civil de España</strong>: caso de acceso ilícito y extorsión, con tres dominicanos procesados.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2012</div>
+        <div class="timeline-text">Ratificación del <strong>Convenio de Budapest</strong> — RD se convierte en el <strong>primer país del hemisferio</strong> en adherirse a este tratado.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2016</div>
+        <div class="timeline-text">Lanzamiento del <strong>Proyecto República Digital</strong> y participación en <strong>GLACY+</strong> del Consejo de Europa y la Unión Europea.</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1.5rem;">
+      <h3>Desafíos Actuales</h3>
+      <ul>
+        <li><strong>Cifras negras:</strong> Alto volumen de delitos no reportados.</li>
+        <li><strong>Impunidad:</strong> En estafas por internet y difamación digital.</li>
+        <li><strong>Aumento post-pandemia:</strong> Incremento sostenido de delitos digitales.</li>
+      </ul>
+    </div>
+
+    <div class="section-title green" style="margin-top:2rem;">Protocolo de Denuncia Ciudadana</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div><strong>Preservar evidencia</strong><p>No borrar mensajes ni registros. Tomar capturas de pantalla.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div><strong>Portal Digital</strong><p>Denuncia virtual, formal o anónima en el portal de la Policía Nacional.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div><strong>Denuncia Presencial</strong><p>Ante el DICAT directamente o cualquier fiscalía del Ministerio Público.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div><strong>Sistema 311</strong><p>Para quejas y denuncias administrativas relacionadas con delitos tecnológicos.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- MÓDULO 2 — PRÁCTICAS RESUELTAS             -->
+  <!-- ══════════════════════════════════════════ -->
+  <section id="modulo2">
+    <div class="section-title yellow">Módulo 2 — Prácticas Resueltas</div>
+
+    <!-- PRÁCTICA 1 -->
+    <div class="practica-card open">
+      <div class="practica-header" onclick="togglePractica(this)">
+        <div class="practica-num">Práctica 1</div>
+        <h3>Análisis de Caso — El correo del profesor</h3>
+        <span class="practica-toggle">▾</span>
+      </div>
+      <div class="practica-body">
+        <p><strong>Caso:</strong> Un estudiante logra acceder al correo institucional de un profesor sin autorización. Descarga exámenes, modifica información y comparte los archivos con otros compañeros.</p>
+
+        <h4>1. Explicación del caso</h4>
+        <p>Un estudiante aprovechó alguna vulnerabilidad para entrar al correo institucional de su profesor sin permiso. Dentro, no solo revisó el contenido sino que descargó material confidencial, alteró información del sistema y distribuyó ese material entre compañeros. Esta acción implica violación de privacidad, manipulación de datos institucionales y distribución no autorizada de información confidencial, comprometiendo la integridad del proceso educativo.</p>
+
+        <h4>2. Delitos cometidos</h4>
+        <ul>
+          <li>Acceso ilícito a un sistema de información (Art. 6)</li>
+          <li>Daño y alteración de datos (Art. 10)</li>
+          <li>Revelación de datos confidenciales por acceso ilícito (Art. 6, Párrafo I)</li>
+          <li>Uso de medios para acceder sin autorización (Art. 7)</li>
+        </ul>
+
+        <h4>3. Por qué es ilegal</h4>
+        <p>El estudiante accedió a un sistema que no le pertenecía y sin autorización. La Ley 53-07 protege la confidencialidad e integridad de los sistemas de información; ingresar sin permiso, modificar datos y distribuirlos viola estos principios, independientemente de si la intención era "solo ver" los exámenes.</p>
+
+        <h4>4. Qué establece la Ley 53-07</h4>
+        <ul>
+          <li><strong>Art. 6:</strong> Acceso ilícito — 3 meses a 1 año de prisión y multa.</li>
+          <li><strong>Art. 6, Párrafo I:</strong> Si resultó modificación o revelación de datos confidenciales — sube a 1–3 años.</li>
+          <li><strong>Art. 10:</strong> Alteración de datos con fines fraudulentos — 3 meses a 1 año (o hasta 3 años si es vinculado a la institución).</li>
+        </ul>
+
+        <h4>5. Consecuencias legales</h4>
+        <ul>
+          <li>Prisión de 1 a 3 años por acceso ilícito con modificación de datos.</li>
+          <li>Multa económica según la ley.</li>
+          <li>Posible expulsión de la institución educativa.</li>
+          <li>Antecedentes penales que afectarían su futuro profesional.</li>
+          <li>Los compañeros que usaron el material podrían ser considerados cómplices.</li>
+        </ul>
+
+        <h4>6. Medidas de prevención</h4>
+        <ol>
+          <li>Contraseñas seguras y únicas para cuentas institucionales con cambio periódico.</li>
+          <li>Autenticación de dos factores (2FA) en el correo institucional.</li>
+          <li>Cerrar sesión en dispositivos compartidos o públicos.</li>
+          <li>Capacitar a estudiantes y docentes sobre delitos informáticos y sus consecuencias.</li>
+          <li>Monitoreo de accesos por parte del departamento de TI.</li>
+        </ol>
+
+        <h4>7. Reflexión personal</h4>
+        <p>Ante esa situación, lo correcto es no intentar acceder a cuentas ajenas bajo ninguna circunstancia. Si accidentalmente se descubriera una vulnerabilidad, lo ético es reportarla al departamento de tecnología, no explotarla. Respetar la seguridad digital es fundamental porque los sistemas informáticos son extensiones de nuestra identidad. En un mundo cada vez más digital, actuar con integridad en línea es tan importante como hacerlo en la vida presencial.</p>
+      </div>
+    </div>
+
+    <!-- PRÁCTICA 2 -->
+    <div class="practica-card">
+      <div class="practica-header" onclick="togglePractica(this)">
+        <div class="practica-num">Práctica 2</div>
+        <h3>Caso Real — Hackeo a Uber (2022)</h3>
+        <span class="practica-toggle">▾</span>
+      </div>
+      <div class="practica-body">
+        <h4>1. Descripción del caso</h4>
+        <p>En septiembre de 2022, un joven de 18 años se infiltró en los sistemas internos de Uber usando <strong>ingeniería social</strong>: se hizo pasar por personal de TI y convenció a un empleado de compartir sus credenciales. Con ellas, accedió a herramientas internas, bases de datos de empleados y publicó mensajes en los canales de Slack de la empresa.</p>
+
+        <h4>2. Tipo de delito tecnológico</h4>
+        <ul>
+          <li>Ingeniería social combinada con acceso ilícito a sistemas informáticos.</li>
+          <li>Interceptación y uso de datos confidenciales de empleados.</li>
+          <li>Acceso no autorizado a infraestructura crítica de la empresa.</li>
+        </ul>
+
+        <h4>3. Relación con la Ley 53-07</h4>
+        <ul>
+          <li><strong>Art. 6</strong> — Acceso ilícito a sistemas de información.</li>
+          <li><strong>Art. 6, Párrafo I</strong> — Revelación de datos confidenciales obtenidos ilegalmente.</li>
+          <li><strong>Art. 9</strong> — Interceptación de datos pertenecientes a otra entidad.</li>
+        </ul>
+
+        <h4>4. Consecuencias para el responsable</h4>
+        <p>El joven fue arrestado en el Reino Unido y declarado culpable en 2023 de cargos de hackeo y fraude informático bajo la legislación británica, enfrentando potencialmente años de prisión.</p>
+
+        <h4>5. Impacto en la víctima</h4>
+        <p>Uber sufrió exposición de datos internos sensibles, daño reputacional, costos millonarios de respuesta al incidente y reforzamiento de seguridad. Los empleados expuestos quedaron en riesgo de phishing y robo de identidad.</p>
+
+        <h4>6. Medidas que hubieran evitado el caso</h4>
+        <ol>
+          <li>Capacitación en ingeniería social para verificar identidad antes de compartir credenciales.</li>
+          <li>Autenticación multifactor (MFA) obligatoria en todos los sistemas internos.</li>
+          <li>Política de privilegio mínimo: cada empleado accede solo a lo estrictamente necesario.</li>
+        </ol>
+
+        <h4>7. Conclusión personal</h4>
+        <p>El caso Uber demuestra que la tecnología más avanzada puede ser vencida por un simple engaño humano. La ciberseguridad es también un asunto de cultura y educación. Verificar identidades, desconfiar de solicitudes urgentes e inesperadas y nunca compartir credenciales son hábitos que cualquier persona puede adoptar.</p>
+      </div>
+    </div>
+
+    <!-- PRÁCTICA 3 -->
+    <div class="practica-card">
+      <div class="practica-header" onclick="togglePractica(this)">
+        <div class="practica-num">Práctica 3</div>
+        <h3>Caso Creado — Fraude con Deepfake de Voz</h3>
+        <span class="practica-toggle">▾</span>
+      </div>
+      <div class="practica-body">
+        <h4>1. Descripción del caso</h4>
+        <p>Sofía es contadora en una empresa de Santo Domingo. Un lunes recibe una llamada de quien parece ser su jefe, el director financiero Carlos Méndez. La voz es perfectamente reconocible. "Carlos" le pide una transferencia urgente de RD$800,000 a una cuenta de un proveedor nuevo, con total discreción. Sofía realiza la transferencia. Horas después, el director real llama sin saber nada al respecto. Los atacantes habían usado una herramienta de <strong>clonación de voz con inteligencia artificial (deepfake de voz)</strong>, alimentada con audios públicos del director extraídos de videos corporativos. Los fondos ya estaban en múltiples cuentas en el extranjero.</p>
+
+        <h4>2. Delito tecnológico involucrado</h4>
+        <ul>
+          <li>Estafa electrónica mediante engaño y suplantación de identidad (Art. 15).</li>
+          <li>Robo de identidad usando tecnología de clonación de voz (Art. 17).</li>
+          <li>Obtención ilícita de fondos mediante transferencia fraudulenta (Art. 14).</li>
+        </ul>
+
+        <h4>3. Relación con la Ley 53-07</h4>
+        <ul>
+          <li><strong>Art. 14</strong> — Obtención ilícita de fondos: 3 a 10 años de prisión.</li>
+          <li><strong>Art. 15</strong> — Estafa por medios telemáticos: 3 meses a 7 años de prisión.</li>
+          <li><strong>Art. 17</strong> — Robo de identidad: 3 meses a 7 años de prisión.</li>
+        </ul>
+
+        <h4>4. Consecuencias legales</h4>
+        <p>Los responsables podrían enfrentar hasta 10 años de prisión por obtención ilícita de fondos, más penas adicionales por robo de identidad y estafa. La empresa podría demandar civiles por daños económicos.</p>
+
+        <h4>5. Plan de prevención (4 acciones)</h4>
+        <ol>
+          <li><strong>Protocolo de verificación doble:</strong> Toda transferencia mayor a cierto monto requiere confirmación por un segundo canal oficial, nunca solo por una llamada entrante.</li>
+          <li><strong>Capacitación sobre deepfakes:</strong> Informar al equipo financiero sobre la existencia de tecnología de clonación de voz y la importancia de no actuar solo bajo presión verbal.</li>
+          <li><strong>Palabra clave secreta:</strong> Establecer una contraseña verbal entre directivos y el equipo financiero para validar solicitudes urgentes.</li>
+          <li><strong>Múltiples aprobadores:</strong> Ninguna transferencia de alto valor puede ser autorizada por una sola persona.</li>
+        </ol>
+
+        <h4>6. Cómo educar a otros</h4>
+        <p>Organizaría una charla mostrando ejemplos reales de deepfakes de voz para que los empleados experimenten en primera persona lo convincente que puede sonar. El impacto auditivo directo es mucho más efectivo que solo leer sobre el tema. Luego explicaría el protocolo interno de verificación y distribuiría una guía de bolsillo con los pasos a seguir ante cualquier solicitud financiera urgente por teléfono.</p>
+
+        <h4>7. Reflexión final</h4>
+        <p>Estos delitos son cada vez más comunes porque la tecnología avanza más rápido que la conciencia de las personas sobre sus riesgos. Herramientas de inteligencia artificial antes exclusivas de grandes actores hoy están al alcance de cualquiera con internet. Como ciudadano digital, mi rol es mantenerme informado, cuestionar lo urgente e inusual, y nunca subestimar la creatividad de quienes buscan engañar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- CASOS PRÁCTICOS                            -->
+  <!-- ══════════════════════════════════════════ -->
+  <section id="casos">
+    <div class="section-title red">Casos Prácticos — 5 Escenarios Resueltos</div>
+
+    <!-- CASO 1 -->
+    <div class="caso-card open">
+      <div class="caso-header" onclick="toggleCaso(this)">
+        <div class="caso-num">Caso 1</div>
+        <h3>Acceso Ilícito y Violación de Privacidad</h3>
+        <span class="caso-toggle">▾</span>
+      </div>
+      <div class="caso-body">
+        <p><strong>Situación:</strong> Juan accede a la cuenta de Instagram de María (su ex-pareja) usando una contraseña guardada. Revisa mensajes, descarga fotos, publica contenido íntimo y cambia la contraseña.</p>
+        <div class="delitos-tag">
+          <strong style="font-size:13px;display:block;margin-bottom:.4rem;">Delitos aplicables:</strong>
+          <span>Art. 6 — Acceso ilícito</span>
+          <span>Art. 10 — Daño de datos</span>
+          <span>Art. 19 — Invasión de privacidad</span>
+        </div>
+        <div class="answer-box" style="margin-top:1rem;">
+          <span class="answer-label">✔ Preguntas resueltas</span>
+          <ul>
+            <li><strong>¿Es legal si ya tenías la contraseña?</strong> No. Usar credenciales ajenas sin autorización expresa es acceso ilícito según la Ley 53-07, sin importar cómo se obtuvo la contraseña.</li>
+            <li><strong>¿Qué derechos fueron vulnerados?</strong> Derecho a la privacidad, integridad de la información personal y dignidad.</li>
+            <li><strong>Consecuencias para Juan:</strong> 3 meses a 3 años de prisión y multa, agravado por la publicación de contenido íntimo.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASO 2 -->
+    <div class="caso-card">
+      <div class="caso-header" onclick="toggleCaso(this)">
+        <div class="caso-num">Caso 2</div>
+        <h3>Phishing y Fraude Electrónico</h3>
+        <span class="caso-toggle">▾</span>
+      </div>
+      <div class="caso-body">
+        <p><strong>Situación:</strong> Pedro ingresa sus credenciales bancarias en una página falsa recibida por correo. Horas después su cuenta es vaciada.</p>
+        <div class="delitos-tag">
+          <strong style="font-size:13px;display:block;margin-bottom:.4rem;">Delitos aplicables:</strong>
+          <span>Art. 15 — Estafa electrónica</span>
+          <span>Art. 14 — Obtención ilícita de fondos</span>
+          <span>Art. 8 — Dispositivos fraudulentos</span>
+        </div>
+        <div class="answer-box" style="margin-top:1rem;">
+          <span class="answer-label">✔ Preguntas resueltas</span>
+          <ul>
+            <li><strong>¿Quién es responsable?</strong> El atacante es el principal responsable. El banco puede tener responsabilidad secundaria si no implementó alertas ante transferencias inusuales.</li>
+            <li><strong>Errores de Pedro:</strong> Hacer clic en un enlace de correo no verificado, no revisar el dominio del remitente, ingresar datos en una página sin validar su autenticidad.</li>
+            <li><strong>Medidas preventivas:</strong> Nunca ingresar credenciales desde enlaces de correo; activar alertas bancarias; usar autenticación de dos factores.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASO 3 -->
+    <div class="caso-card">
+      <div class="caso-header" onclick="toggleCaso(this)">
+        <div class="caso-num">Caso 3</div>
+        <h3>Difamación y Suplantación de Identidad</h3>
+        <span class="caso-toggle">▾</span>
+      </div>
+      <div class="caso-body">
+        <p><strong>Situación:</strong> Un estudiante crea una cuenta falsa con nombre y foto de un profesor, publicando comentarios ofensivos e información falsa.</p>
+        <div class="delitos-tag">
+          <strong style="font-size:13px;display:block;margin-bottom:.4rem;">Delitos aplicables:</strong>
+          <span>Art. 17 — Robo de identidad</span>
+          <span>Art. 21 — Difamación digital</span>
+          <span>Art. 22 — Injuria pública</span>
+        </div>
+        <div class="answer-box" style="margin-top:1rem;">
+          <span class="answer-label">✔ Preguntas resueltas</span>
+          <ul>
+            <li><strong>¿Cómo afecta al profesor?</strong> Daña su reputación ante estudiantes, padres e institución; puede costarle su empleo y credibilidad académica.</li>
+            <li><strong>¿Es un delito grave?</strong> Sí. La combinación de suplantación y difamación pública tiene penas que suman varios años de prisión.</li>
+            <li><strong>¿Cómo demostrar quién creó la cuenta?</strong> Mediante la dirección IP de registro, historial de dispositivos y metadatos solicitados a la plataforma con orden judicial.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASO 4 -->
+    <div class="caso-card">
+      <div class="caso-header" onclick="toggleCaso(this)">
+        <div class="caso-num">Caso 4</div>
+        <h3>Acceso No Autorizado a Sistema Escolar</h3>
+        <span class="caso-toggle">▾</span>
+      </div>
+      <div class="caso-body">
+        <p><strong>Situación:</strong> Carlos explota una vulnerabilidad del sistema académico para cambiar calificaciones propias y de otros a cambio de dinero.</p>
+        <div class="delitos-tag">
+          <strong style="font-size:13px;display:block;margin-bottom:.4rem;">Delitos aplicables:</strong>
+          <span>Art. 6 — Acceso ilícito</span>
+          <span>Art. 10 — Alteración de datos</span>
+          <span>Art. 11 — Sabotaje</span>
+        </div>
+        <div class="answer-box" style="margin-top:1rem;">
+          <span class="answer-label">✔ Preguntas resueltas</span>
+          <ul>
+            <li><strong>¿Es culpable aunque haya "descubierto una falla"?</strong> Sí. Descubrir una vulnerabilidad no da derecho a explotarla. Debió reportarla.</li>
+            <li><strong>¿Hacking ético o delito?</strong> Delito. El hacking ético requiere permiso explícito; Carlos actuó sin autorización y con beneficio económico.</li>
+            <li><strong>¿Cómo debió actuar?</strong> Reportar la vulnerabilidad al departamento de TI o a las autoridades de la institución.</li>
+            <li><strong>Consecuencias:</strong> Hasta 3 años de prisión, multa y posible expulsión. Los estudiantes que pagaron podrían ser cómplices.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASO 5 -->
+    <div class="caso-card">
+      <div class="caso-header" onclick="toggleCaso(this)">
+        <div class="caso-num">Caso 5</div>
+        <h3>Difusión de Contenido sin Consentimiento</h3>
+        <span class="caso-toggle">▾</span>
+      </div>
+      <div class="caso-body">
+        <p><strong>Situación:</strong> La pareja de Ana difunde fotos íntimas en grupos de WhatsApp y redes sociales sin su consentimiento, causando daño emocional y social.</p>
+        <div class="delitos-tag">
+          <strong style="font-size:13px;display:block;margin-bottom:.4rem;">Delitos aplicables:</strong>
+          <span>Art. 19 — Invasión de privacidad</span>
+          <span>Art. 21 — Difamación</span>
+          <span>Art. 23 — Atentado sexual (si aplica)</span>
+        </div>
+        <div class="answer-box" style="margin-top:1rem;">
+          <span class="answer-label">✔ Preguntas resueltas</span>
+          <ul>
+            <li><strong>¿Es solo un problema personal?</strong> No. Es un delito tipificado en los Arts. 19 y 21, y puede calificar bajo el Art. 23 si el contenido tiene carácter sexual.</li>
+            <li><strong>¿Qué derechos fueron vulnerados?</strong> Derecho a la privacidad, dignidad, imagen e integridad emocional.</li>
+            <li><strong>Consecuencias:</strong> Prisión de 6 meses a 2 años por invasión de privacidad; hasta 1 año adicional por difamación; penas mayores bajo Art. 23.</li>
+            <li><strong>Prevención:</strong> Denunciar de inmediato al DICAT; conservar evidencia; no compartir contenido íntimo digital bajo ninguna circunstancia.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert">
+      ⚠️ La subnotificación sigue siendo el principal obstáculo para medir y combatir eficazmente el cibercrimen en la República Dominicana. Si eres víctima de un delito tecnológico, <strong>denuncia</strong>.
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Guía de Estudio · Ciberseguridad y Marco Legal RD · Ley No. 53-07
+</footer>
+
+<script>
+  function toggleCaso(header) {
+    header.closest('.caso-card').classList.toggle('open');
+  }
+  function togglePractica(header) {
+    header.closest('.practica-card').classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>
